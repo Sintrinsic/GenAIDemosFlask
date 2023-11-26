@@ -1,17 +1,32 @@
 #!flask/bin/python
 import json
-from flask import Flask, Response
+from flask import Flask, Response, render_template
 import optparse
 
 application = Flask(__name__)
 
 @application.route('/', methods=['GET'])
-def get():
-    return Response(json.dumps({'Output': 'Hello World'}), mimetype='application/json', status=200)
+def index():
+    return render_template('main.html')
 
-@application.route('/', methods=['POST'])
-def post():
-    return Response(json.dumps({'Output': 'Hello World'}), mimetype='application/json', status=200)
+@application.route('/home', methods=['GET'])
+def alt_index():
+    return render_template('main.html')
+
+@application.route('/report', methods=['GET'])
+def report():
+    return render_template('report.html')
+
+@application.route('/utility_outage', methods=['GET'])
+def utility_outage():
+    return render_template('outage.html')
+
+@application.route('/input_aggregation', methods=['GET'])
+def input_aggregation():
+    return render_template('input_aggregation.html')
+
+
+
 
 if __name__ == '__main__':
     default_port = "80"

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="whole-page">
+    <nav id="sidebar">
+        <div id="header">Gen-AI Demos</div>
+        <div id="name">Brandon DuPree</div>
+        <ul>
+            <li><a href="home">Home</a></li>
+            <li><a href="report">Police Report</a></li>
+            <li><a href="utility_outage">Utility Outage </a></li>
+            <li><a href="input_aggregation">Suggestion Box</a></li>
+
+
+            <!-- Add more links as needed -->
+        </ul>
+    </nav>
+<div id="tool-container">
+    <div id="tool-name">
+Home
+    </div>
+    <div id="tool-body">
+        <div id="tool-description">
+            {% block description %}
+            {% endblock %}
+        </div>
+        <div id="tool">
+            <!-- Content Block -->
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+</div>
+</div>
+
+</body>
+</html>
+

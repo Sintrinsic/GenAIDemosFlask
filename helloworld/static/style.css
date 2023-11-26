@@ -1,0 +1,184 @@
+body {
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    background-color: var(--platinum);
+    text-transform: uppercase;
+    display: flex; /* Enable flex layout */
+}
+
+#sidebar {
+    width: 200px; /* Fixed width */
+    background-color: var(--oxford-blue);
+    color: var(--silver-lake-blue);
+    height: 100vh;
+    padding: 0;
+    box-sizing: border-box;
+    border-right: 2px solid var(--yinmn-blue);
+    min-width: 200px;
+}
+
+#header {
+    font-size: 20px;
+    font-weight: 200;
+    background-color: var(--rich-black);
+    color: var(--platinum);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--yinmn-blue);
+}
+
+#name {
+    color: var(--silver-lake-blue);
+    padding: 2px 20px;
+    font-size: 10px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--yinmn-blue);
+}
+
+#whole-page {
+    display: flex; /* Use Flexbox */
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+}
+
+#tool-container {
+    flex-grow: 1; /* Grow to take available space */
+    var(--platinum);
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full height of the viewport */
+}
+
+#tool-name {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    background-color: var(--platinum);
+    color: var(--rich-black);
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--yinmn-blue);
+}
+
+#tool-body {
+    flex-grow: 1; /* Fill remaining space */
+    padding: 10px;
+    min-width: 400px;
+
+    box-sizing: border-box;
+    text-transform: none;
+    font-family: Arial;
+    float:left;
+}
+
+#tool {
+    height:100%;
+}
+
+#tool-description {
+    width: 400px;
+    text-align: left;
+    float:right
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li a {
+    display: block;
+    height: 35px;
+    line-height: 35px;
+    color: var(--platinum);
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.3s;
+    padding: 0 20px;
+    background-color: var(--oxford-blue);
+    border: none;
+    border-bottom: 1px solid var(--yinmn-blue);
+}
+
+li a:hover {
+    background-color: var(--yinmn-blue);
+    color: var(--platinum);
+    transform: translateY(1px);
+}
+
+
+
+/* Color Variables */
+:root {
+    --rich-black: #0d1b2a;
+    --oxford-blue: #1b263b;
+    --yinmn-blue: #415a77;
+    --silver-lake-blue: #778da9;
+    --platinum: #e0e1dd;
+}
+
+
+
+/*  Chat CSS */
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    max-width:800px;
+    min-height:500px;
+    box-sizing: border-box;
+}
+
+#message-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    background-color: #fff;
+    overflow-y:scroll;
+}
+
+#message-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    height: 50px;
+    margin-bottom:2px;
+
+}
+
+#send-button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+/* Style for individual messages */
+.message {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #eee;
+    background-color: #e6e6e6;
+}
+
+.message {
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    margin-right:5px;
+}
+
+.message-sender {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.message-body {
+    /* No specific styling required, but can be customized as needed */
+}

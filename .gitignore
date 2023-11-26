@@ -1,0 +1,9 @@
+dist/
+build/
+.eggs/
+helloworld.egg-info/
+.idea/
+lawFiles/
+helloworld/__pycache__/
+project_outline.txt
+get_project_text_file.sh
