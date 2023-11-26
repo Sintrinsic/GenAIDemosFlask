@@ -7,3 +7,7 @@ lawFiles/
 helloworld/__pycache__/
 project_outline.txt
 get_project_text_file.sh
+secret_key.txt
+chat/__pycache__/
+tests/__pycache__/
+```
