@@ -146,6 +146,18 @@ li a:hover {
     box-sizing: border-box;
 }
 
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Full height of the viewport */
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    width:100%;
+    min-height:500px;
+    box-sizing: border-box;
+}
+
 #chat-container2 {
     display: flex;
     flex-direction: column;
@@ -163,7 +175,6 @@ li a:hover {
     overflow-y: auto; /* Enable scrolling */
     padding: 10px;
     border: 1px solid #ddd;
-    margin-bottom: 10px;
     background-color: #fff;
 }
 
@@ -208,4 +219,18 @@ li a:hover {
     /* No specific styling required, but can be customized as needed */
 }
 
+.loading-bar {
+  text-align: center;
+  margin: 0px;
+  margin-right: 0px;
+  padding: 0px;
 
+  border: 1px solid var(--silver-lake-blue);
+  background-color: #f1f1f1;
+    margin: 1px 0px 0px 0px;
+}
+
+#loading-spinner {
+    visibility: hidden;
+    height:25px;
+}

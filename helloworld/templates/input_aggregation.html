@@ -120,6 +120,8 @@
                 <div class="comment">A footbridge over the creek by Oak Street would make walks much safer.</div>
                 <div class="comment">Recycling matters! Let's increase the capacity of our downtown bins.</div>
             </div>
+            <div class="loading-bar"><img id="loading-spinner" src="{{ url_for('static', filename='spinner-200px.gif') }}"> </div>
+
             <textarea type="text" id="comment-input" placeholder="Type a comment..."></textarea>
             <button id="clear-comments">Clear comments</button>
             <button id="add-comment">Add new comment</button>
@@ -156,6 +158,12 @@
 
         });
 
+         function hideSpinner() {
+        document.getElementById('loading-spinner').style.visibility = 'hidden';
+        }
+        function showSpinner() {
+            document.getElementById('loading-spinner').style.visibility = 'visible';
+        }
         function getMessages() {
             const messages = Array.from(document.querySelectorAll('#message-area .message')).map(messageDiv => {
                 return {
@@ -177,6 +185,7 @@
         }
 
        function callProcessMessages(messages){
+             showSpinner()
                         // Send the messages to the server
             fetch('/process_message', {
                 method: 'POST',
@@ -187,9 +196,11 @@
             })
                 .then(response => response.text())
                 .then(responseMessage => {
+                    hideSpinner()
                     addMessageToDisplay('Assistant', responseMessage);
                 })
                 .catch((error) => {
+                    hideSpinner()
                     console.error('Error:', error);
                 });
        }

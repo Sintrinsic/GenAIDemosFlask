@@ -20,8 +20,8 @@ Refreshing the page will clear current context.
 {% endblock %}
 
 {% block content %}
-                    <div id="chat-container1">
-
+        <div id="suggestion-box-area">
+                    <div id="chat-container">
                         <div id="message-area">
                             <div class="message">
                                 <div class="message-sender">user</div>
@@ -40,10 +40,13 @@ Then, you can proceed to describe the timeline of events. I'm here to help you s
                             </div>
 
                         </div>
+                        <div class="loading-bar"><img id="loading-spinner" src="{{ url_for('static', filename='spinner-200px.gif') }}"> </div>
+
                         <textarea type="text" id="message-input" placeholder="Type a message..."></textarea>
                         <button id="send-report">Send Pre-generated outline</button>
                         <button id="send-button">Send custom message</button>
                     </div>
+        </div>
 
     <script>
     document.getElementById('send-report').addEventListener('click', function() {
@@ -76,6 +79,12 @@ Then, you can proceed to describe the timeline of events. I'm here to help you s
 
     });
 
+    function hideSpinner() {
+        document.getElementById('loading-spinner').style.visibility = 'hidden';
+    }
+    function showSpinner() {
+        document.getElementById('loading-spinner').style.visibility = 'visible';
+    }
     function sendMessages(){
                 // Prepare the messages from the message-area div for sending
         const messages = Array.from(document.querySelectorAll('#message-area .message')).map(messageDiv => {
@@ -85,7 +94,7 @@ Then, you can proceed to describe the timeline of events. I'm here to help you s
             };
         });
         console.log('messages:', messages);
-
+        showSpinner()
         // Add the current user message to the stack
         // messages.push({ role: 'user', content: userMessage });
 
@@ -99,9 +108,11 @@ Then, you can proceed to describe the timeline of events. I'm here to help you s
         })
         .then(response => response.text())
         .then(responseMessage => {
+            hideSpinner()
             addMessageToDisplay('Assistant', responseMessage);
         })
         .catch((error) => {
+            hideSpinner()
             console.error('Error:', error);
         });
 
