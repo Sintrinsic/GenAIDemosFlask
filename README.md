@@ -22,18 +22,20 @@ This sample includes:
   AWS Elastic Beanstalk to deploy your application
 * template.yml - this file contains the description of AWS resources used by AWS
   CloudFormation to deploy your infrastructure
-* template-configuration.json - this file contains the project ARN with placeholders used for tagging resources with the project ID
+* template-configuration.json - this file contains the project ARN with placeholders used for tagging resources with the
+  project ID
 
 Getting Started
 ---------------
 
-These directions assume you want to develop on  your development environment or a Cloud9 environment, and not
+These directions assume you want to develop on your development environment or a Cloud9 environment, and not
 from the Amazon EC2 instance itself. If you're on the Amazon EC2 instance, the
 virtual environment is already set up for you, and you can start working on the
 code.
 
 To work on the sample code, you'll need to clone your project's repository to your
-local computer. You can find instructions in the AWS CodeStar user guide at https://docs.aws.amazon.com/codestar/latest/userguide/getting-started.html#clone-repo.
+local computer. You can find instructions in the AWS CodeStar user guide
+at https://docs.aws.amazon.com/codestar/latest/userguide/getting-started.html#clone-repo.
 
 1. Create a Python virtual environment for your Flask project. This virtual
    environment allows you to isolate this project and install any packages you

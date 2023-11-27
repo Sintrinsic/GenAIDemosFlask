@@ -1,45 +1,45 @@
 {% extends 'base.html' %}
 
 {% block description %}
-                    Law enforcement officers are required to write reports for any notable action in the course of their day.<br>
-                    These reports are often used in court, and as such, need to be thorough, professional documents that
-                    contain all relevant information to potential future investigation.<br>
-                    This process is often iterative, with the officer's superior requesting revisions to include more detail,
-                    or rephrase some aspect of the scenario. <br>
-                    This tool aims to reduce writing time, revision cycles, and risk of missed information, including the
-                    reasoning of an officer if rules or departmental guidelines were violated.
+    Law enforcement officers are required to write reports for any notable action in the course of their day.<br>
+    These reports are often used in court, and as such, need to be thorough, professional documents that
+    contain all relevant information to potential future investigation.<br>
+    This process is often iterative, with the officer's superior requesting revisions to include more detail,
+    or rephrase some aspect of the scenario. <br>
+    This tool aims to reduce writing time, revision cycles, and risk of missed information, including the
+    reasoning of an officer if rules or departmental guidelines were violated.
 {% endblock %}
 
 {% block content %}
 
 
-   <form action="/process_message" method="post">
-    <input type="hidden" name="agent" value="ReportWriter">
-    <input type="text" name="messages" placeholder="Type a message...">
-    <button id="send-button">Send JSON</button>
-</form>
+    <form action="/process_message" method="post">
+        <input type="hidden" name="agent" value="ReportWriter">
+        <input type="text" name="messages" placeholder="Type a message...">
+        <button id="send-button">Send JSON</button>
+    </form>
 
-<script>
-    document.getElementById('send-button').addEventListener('click', function() {
-        const data = {"agent":"ReportWriter","messages":[{"role":"user","content":"are you awake?"}]};
+    <script>
+        document.getElementById('send-button').addEventListener('click', function () {
+            const data = {"agent": "ReportWriter", "messages": [{"role": "user", "content": "are you awake?"}]};
 
-        fetch('/process_message', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            // Handle the response data here
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+            fetch('/process_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    // Handle the response data here
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         });
-    });
-</script>
+    </script>
 
 
 

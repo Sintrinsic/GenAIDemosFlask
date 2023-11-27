@@ -1,3 +1,5 @@
+import boto3
+from botocore.exceptions import ClientError, NoCredentialsError
 from openai import OpenAI
 
 
@@ -8,8 +10,7 @@ class OpenAIClient:
     def getInstance(cls):
         if cls._instance is None:
             # Fetch API key from config file
-            with open("secret_key.txt") as f:
-                api_key = f.readline()
+            api_key = cls.get_secret()
             cls._instance = cls(api_key)
         return cls._instance
 
@@ -51,3 +52,33 @@ class OpenAIClient:
         )
         assistant_message = response.choices[0].message.content
         return assistant_message
+
+    # Use this code snippet in your app.
+    # If you need more information about configurations
+    # or implementing the sample code, visit the AWS docs:
+    # https://aws.amazon.com/developer/language/python/
+
+    @staticmethod
+    def get_secret():
+
+        secret_name = "openapi_secret"
+        region_name = "us-west-2"
+
+        # Create a Secrets Manager client
+        try:
+            session = boto3.session.Session()
+            client = session.client(
+                service_name='secretsmanager',
+                region_name=region_name
+            )
+
+            get_secret_value_response = client.get_secret_value(
+                SecretId=secret_name
+            )
+            api_key = get_secret_value_response['SecretString']
+        except (ClientError, NoCredentialsError) as e:
+            with open("secret_key.txt") as f:
+                api_key = f.readline()
+            print(f"AWS secrets not available. Using local secret key.")
+
+        return api_key

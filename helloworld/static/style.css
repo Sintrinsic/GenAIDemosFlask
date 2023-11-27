@@ -43,7 +43,7 @@ body {
 
 #tool-container {
     flex-grow: 1; /* Grow to take available space */
-    var(--platinum);
+var(--platinum);
     display: flex;
     flex-direction: column;
     height: 100vh; /* Full height of the viewport */
@@ -68,24 +68,21 @@ body {
     box-sizing: border-box;
     text-transform: none;
     font-family: Arial;
-    float:left;
+    float: left;
 }
 
 #tool {
-    height:100%;
+    height: 100%;
 }
 
 #tool-description {
     width: 400px;
     text-align: left;
-    float:right
+    float: right;
+    margin-left:40px;
 }
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
+
 
 li a {
     display: block;
@@ -107,7 +104,6 @@ li a:hover {
 }
 
 
-
 /* Color Variables */
 :root {
     --rich-black: #0d1b2a;
@@ -118,9 +114,7 @@ li a:hover {
 }
 
 
-
 /*  Chat CSS */
-
 
 
 #suggestion-box-area {
@@ -130,10 +124,10 @@ li a:hover {
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     padding: 10px;
-    max-width:900px;
-    min-height:500px;
+    min-height: 500px;
     box-sizing: border-box;
 }
+
 #chat-container1 {
     display: flex;
     flex-direction: column;
@@ -141,8 +135,8 @@ li a:hover {
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     padding: 10px;
-    width:70%;
-    min-height:500px;
+    width: 70%;
+    min-height: 500px;
     box-sizing: border-box;
 }
 
@@ -153,8 +147,8 @@ li a:hover {
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     padding: 10px;
-    width:100%;
-    min-height:500px;
+    width: 100%;
+    min-height: 500px;
     box-sizing: border-box;
 }
 
@@ -165,12 +159,12 @@ li a:hover {
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     padding: 10px;
-    width:30%;
-    min-height:500px;
+    width: 30%;
+    min-height: 500px;
     box-sizing: border-box;
 }
 
-#message-area, #comment-area{
+#message-area, #comment-area {
     flex-grow: 1; /* Allow message-area to fill the available space */
     overflow-y: auto; /* Enable scrolling */
     padding: 10px;
@@ -182,7 +176,7 @@ li a:hover {
     padding: 10px;
     border: 1px solid #ddd;
     height: 50px;
-    margin-bottom:2px;
+    margin-bottom: 2px;
 
 }
 
@@ -206,7 +200,7 @@ li a:hover {
     border: 1px solid #ccc;
     margin-bottom: 10px;
     background-color: #f0f0f0;
-    margin-right:5px;
+    margin-right: 5px;
 }
 
 .message-sender {
@@ -215,22 +209,29 @@ li a:hover {
 }
 
 .message-body {
-    white-space: pre-wrap;
+    /* white-space: pre-wrap; */
     /* No specific styling required, but can be customized as needed */
 }
 
 .loading-bar {
-  text-align: center;
-  margin: 0px;
-  margin-right: 0px;
-  padding: 0px;
+    text-align: center;
+    margin: 0px;
+    margin-right: 0px;
+    padding: 0px;
 
-  border: 1px solid var(--silver-lake-blue);
-  background-color: #f1f1f1;
+    border: 1px solid var(--silver-lake-blue);
+    background-color: #f1f1f1;
     margin: 1px 0px 0px 0px;
 }
 
 #loading-spinner {
     visibility: hidden;
-    height:25px;
+    height: 25px;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
 }

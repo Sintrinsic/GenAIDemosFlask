@@ -1,13 +1,10 @@
-import enum
-import threading
-
 from chat.chat_history import ChatHistory, MessageType
 from chat.openAI_client import OpenAIClient
 
 
 class ArtificialFriend:
     def __init__(self, identity_message, model_name='gpt-4-1106-preview',
-                 agent_name="assistant",  chat_mode="solo"):
+                 agent_name="assistant", chat_mode="solo"):
         self.agent_name = agent_name
         self.chat_mode = chat_mode
         self.openai_client = OpenAIClient.getInstance()
@@ -38,7 +35,6 @@ class ArtificialFriend:
 
     def send_message(self, message):
         return self.send_message_solo(message)
-
 
     def send_message_solo(self, message):
         self.__add_message(message, "user")

@@ -10,3 +10,4 @@ get_project_text_file.sh
 chat/__pycache__/
 tests/__pycache__/
 helloworld/tools/agents/__pycache__/
+secret_key.txt

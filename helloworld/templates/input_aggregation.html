@@ -8,15 +8,18 @@
 {% endblock %}
 
 {% block description %}
-    This tool is designed to aggregate and analyze large volumes of chaotic user submitted feedback, with no pre-processing, and almost no cost overhead.
+    This tool is designed to aggregate and analyze large volumes of chaotic user submitted feedback, with no
+    pre-processing, and almost no cost overhead.
     <br>
     <br>
-    The comment collection system could come from email, web form input, facebook comments, etc. Any department or local government could
+    The comment collection system could come from email, web form input, facebook comments, etc. Any department or local
+    government could
     easily implement this as a low cost solution to hearing the voices of its employees, customers, or citizens in a way
     that allows for quick prioritization and positive change. <br><br>
     <b>To execute:<br></b>Press the "Send comments for review" button below. <br><br>
     If you'd prefer a custom set of comments, you can clear the comments, and manually add whatever you'd like. <br><br>
-    This tool relies on OpenAI's chat completion API, so query response times will vary based on their server performance.<br><br>
+    This tool relies on OpenAI's chat completion API, so query response times will vary based on their server
+    performance.<br><br>
     Refreshing the page will clear current context.
 
 {% endblock %}
@@ -36,6 +39,9 @@
                 </div>
 
             </div>
+            <div class="loading-bar"><img id="loading-spinner"
+                                          src="{{ url_for('static', filename='spinner-200px.gif') }}"></div>
+
             <textarea type="text" id="message-input" placeholder="Type a message..."></textarea>
             <button id="send-report">Submit comments for review</button>
             <button id="send-button">Send custom message</button>
@@ -120,7 +126,6 @@
                 <div class="comment">A footbridge over the creek by Oak Street would make walks much safer.</div>
                 <div class="comment">Recycling matters! Let's increase the capacity of our downtown bins.</div>
             </div>
-            <div class="loading-bar"><img id="loading-spinner" src="{{ url_for('static', filename='spinner-200px.gif') }}"> </div>
 
             <textarea type="text" id="comment-input" placeholder="Type a comment..."></textarea>
             <button id="clear-comments">Clear comments</button>
@@ -158,12 +163,14 @@
 
         });
 
-         function hideSpinner() {
-        document.getElementById('loading-spinner').style.visibility = 'hidden';
+        function hideSpinner() {
+            document.getElementById('loading-spinner').style.visibility = 'hidden';
         }
+
         function showSpinner() {
             document.getElementById('loading-spinner').style.visibility = 'visible';
         }
+
         function getMessages() {
             const messages = Array.from(document.querySelectorAll('#message-area .message')).map(messageDiv => {
                 return {
@@ -184,9 +191,9 @@
 
         }
 
-       function callProcessMessages(messages){
-             showSpinner()
-                        // Send the messages to the server
+        function callProcessMessages(messages) {
+            showSpinner()
+            // Send the messages to the server
             fetch('/process_message', {
                 method: 'POST',
                 headers: {
@@ -197,15 +204,16 @@
                 .then(response => response.text())
                 .then(responseMessage => {
                     hideSpinner()
-                    addMessageToDisplay('Assistant', responseMessage);
+                    html_message = marked.parse(responseMessage)
+                    addMessageToDisplay('Assistant', html_message);
                 })
                 .catch((error) => {
                     hideSpinner()
                     console.error('Error:', error);
                 });
-       }
+        }
 
-       function extractComments() {
+        function extractComments() {
             // Fetch the comment area
             const commentArea = document.getElementById('comment-area');
             // Get all comment divs
@@ -221,10 +229,10 @@
         }
 
 
-        function sendMessagesWithComments(){
+        function sendMessagesWithComments() {
             comments = extractComments()
             addMessageToDisplay('User', "Thanks. I've just uploaded the comments list.");
-            systemMessage = {"role": "system","content": comments}
+            systemMessage = {"role": "system", "content": comments}
             messages = getMessages()
             messages.splice(messages.length - 1, 0, systemMessage);
             callProcessMessages(messages)
@@ -252,7 +260,7 @@
             commentArea.scrollTop = commentArea.scrollHeight; // Scroll to the bottom
         }
 
-        function clearComments(){
+        function clearComments() {
             const commentArea = document.getElementById('comment-area');
             commentArea.innerHTML = '';
         }

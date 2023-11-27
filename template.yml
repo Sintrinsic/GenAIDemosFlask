@@ -3,7 +3,7 @@ Transform:
   - AWS::CodeStar
 
 Conditions:
-  UseSubnet: !Not [!Equals [!Ref "SubnetId", subnet-none]]
+  UseSubnet: !Not [ !Equals [ !Ref "SubnetId", subnet-none ] ]
 
 Parameters:
   ProjectId:

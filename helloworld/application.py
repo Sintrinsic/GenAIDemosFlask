@@ -1,7 +1,8 @@
 #!flask/bin/python
 import json
-from flask import Flask, Response, render_template, request, jsonify
 import optparse
+
+from flask import Flask, render_template, request, jsonify
 
 from helloworld.tools.agents.report_writer import ReportWriter
 from helloworld.tools.agents.suggestion_box import SuggestionBox
@@ -15,25 +16,31 @@ agent_mapping = {
     # Add other agents here as needed
 }
 
+
 @application.route('/', methods=['GET'])
 def index():
     return render_template('main.html')
+
 
 @application.route('/home', methods=['GET'])
 def alt_index():
     return render_template('main.html')
 
+
 @application.route('/report', methods=['GET'])
 def report():
     return render_template('report.html')
+
 
 @application.route('/utility_outage', methods=['GET'])
 def utility_outage():
     return render_template('outage.html')
 
+
 @application.route('/feedback_analysis', methods=['GET'])
 def input_aggregation():
     return render_template('input_aggregation.html')
+
 
 @application.route('/process_message', methods=['POST'])
 def process_message():

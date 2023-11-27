@@ -1,4 +1,4 @@
-from chat.artificial_friend import  ArtificialFriend
+from chat.artificial_friend import ArtificialFriend
 from chat.chat_history import ChatHistory
 from chat.openAI_client import OpenAIClient
 

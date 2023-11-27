@@ -2,8 +2,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='script.js') }}">
-
+    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
@@ -23,24 +23,24 @@
             <!-- Add more links as needed -->
         </ul>
     </nav>
-<div id="tool-container">
-    <div id="tool-name">
-        {% block tool_name %}
-        {% endblock %}
-    </div>
-    <div id="tool-body">
-        <div id="tool-description">
-            {% block description %}
+    <div id="tool-container">
+        <div id="tool-name">
+            {% block tool_name %}
             {% endblock %}
         </div>
-        <div id="tool">
-            <!-- Content Block -->
-            {% block content %}
-            {% endblock %}
+        <div id="tool-body">
+            <div id="tool-description">
+                {% block description %}
+                {% endblock %}
+            </div>
+            <div id="tool">
+                <!-- Content Block -->
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 </div>
 
 </body>

@@ -1,6 +1,6 @@
-from datetime import datetime
-import uuid
 import json
+import uuid
+from datetime import datetime
 from enum import Enum
 
 
@@ -8,6 +8,7 @@ class MessageType(Enum):
     Identity = 1
     Correspondence = 2
     Information = 3
+
 
 class Message:
     def __init__(self,
@@ -17,17 +18,17 @@ class Message:
                  msg_uuid: str = None,
                  time_sent: datetime = None,
                  parent: "Message" = None,
-                 child = None, message_type: MessageType = MessageType.Correspondence):
+                 child=None, message_type: MessageType = MessageType.Correspondence):
         self.message_type = message_type
         self.username = username
         self.role = role
         self.parent = parent  # Note: parent is a reference to another Message object
         version_uuid = str(uuid.uuid4())
         self.versions = {version_uuid: {"message_text": message_text,
-                                            "time_sent": time_sent if time_sent is not None else datetime.now(),
-                                            "child": None}}
+                                        "time_sent": time_sent if time_sent is not None else datetime.now(),
+                                        "child": None}}
 
-        self.active_version = version_uuid # The active path in the tree
+        self.active_version = version_uuid  # The active path in the tree
         self.uuid = str(uuid.uuid4()) if msg_uuid is None else msg_uuid
 
     def serialize_recursive(self):
@@ -94,7 +95,7 @@ class Message:
         child_message.parent = self
 
     def can_add_child_without_circular_dependency(self, potential_child):
-        pass # Need to do this, but unsure how to handle the addition of a child to a non-active fork
+        pass  # Need to do this, but unsure how to handle the addition of a child to a non-active fork
 
     def get_active_descendant_list(self):
         output_list = [self]
@@ -102,14 +103,14 @@ class Message:
         if child is not None:
             output_list = output_list + child.get_active_descendant_list()
         return output_list
-    
+
     def add_version(self, message_text, time_sent=None, child=None):
         message_uuid = str(uuid.uuid4())
         self.versions[message_uuid] = {"message_text": message_text,
-                                            "time_sent": time_sent if time_sent is not None else datetime.now(),
-                                            "child": None}
+                                       "time_sent": time_sent if time_sent is not None else datetime.now(),
+                                       "child": None}
         self.active_version = message_uuid
-        
+
     def switch_version(self, message_uuid):
         self.active_version = message_uuid
 
@@ -118,13 +119,14 @@ class ChatHistory:
 
     def __init__(self):
         self.clear_messages()
-        #TODO: Update this so the chat history is cached and only requries traversal for write operations
+        # TODO: Update this so the chat history is cached and only requries traversal for write operations
 
     def clear_messages(self):
         self.messages = {}
         self.root_message = None
 
-    def append_message(self, role: str, username: str, message_text: str, message_type: MessageType = MessageType.Correspondence):
+    def append_message(self, role: str, username: str, message_text: str,
+                       message_type: MessageType = MessageType.Correspondence):
         message_list = self.__get_active_message_list()
         last_message = message_list[-1] if len(message_list) > 0 else None
         new_message = Message(role, username, message_text, parent=last_message, message_type=message_type)
@@ -148,26 +150,22 @@ class ChatHistory:
     def get_raw_message_list(self):
         return self.__get_active_message_list()
 
-
     def get_chat_history_as_text(self):
         # "Chat history:\n message username: message text \nn"
         message_list = self.__get_active_message_list()
         chat_history = "Chat history:\n"
         chat_history += "\n".join([f"{message.username}: {message.get_message_text()}"
-                                     for message in message_list
-                                     if message.role != "system" and message.username != "router"])
+                                   for message in message_list
+                                   if message.role != "system" and message.username != "router"])
         return chat_history
 
-    
     def create_fork(self, message_id, message_text: str):
         target_message = self.messages[message_id]
         target_message.add_version(message_text)
 
-
     def switch_fork(self, message_id, version_id):
         target_message = self.messages[message_id]
         target_message.switch_version(version_id)
-
 
     def to_json(self):
         message_dict = {}
@@ -217,24 +215,19 @@ class ChatHistory:
                         target_message.versions[version_id]["child"] = message_dict[version["child"]]
                         print(f"Setting child of {msg_uuid} to {version['child']}")
 
-
         chat_history = ChatHistory()
         chat_history.messages = message_dict
         chat_history.root_message = message_dict[root_message_uuid]
         return chat_history
 
-
     def list_conversations(self):
         pass
-
 
     def delete_conversation(self, filename):
         pass
 
-
     def save_conversation(self, filename):
         pass
-
 
     def load_conversation(self, filename):
         pass
