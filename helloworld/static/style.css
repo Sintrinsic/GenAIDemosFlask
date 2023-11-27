@@ -121,19 +121,44 @@ li a:hover {
 
 /*  Chat CSS */
 
-#chat-container {
+
+
+#suggestion-box-area {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: calc(100vh - 90px); /* Full height of the viewport */
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     padding: 10px;
-    max-width:800px;
+    max-width:900px;
+    min-height:500px;
+    box-sizing: border-box;
+}
+#chat-container1 {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Full height of the viewport */
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    width:70%;
     min-height:500px;
     box-sizing: border-box;
 }
 
-#message-area {
+#chat-container2 {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Full height of the viewport */
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    width:30%;
+    min-height:500px;
+    box-sizing: border-box;
+}
+
+#message-area, #comment-area{
     flex-grow: 1; /* Allow message-area to fill the available space */
     overflow-y: auto; /* Enable scrolling */
     padding: 10px;
@@ -157,8 +182,8 @@ li a:hover {
     cursor: pointer;
 }
 
-/* Style for individual messages */
-.message {
+
+.comment {
     margin-bottom: 10px;
     padding: 5px;
     border: 1px solid #eee;
@@ -182,3 +207,5 @@ li a:hover {
     white-space: pre-wrap;
     /* No specific styling required, but can be customized as needed */
 }
+
+

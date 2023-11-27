@@ -4,12 +4,14 @@ from flask import Flask, Response, render_template, request, jsonify
 import optparse
 
 from helloworld.tools.agents.report_writer import ReportWriter
+from helloworld.tools.agents.suggestion_box import SuggestionBox
 
 application = Flask(__name__)
 
 # Mapping of agent identifiers to their respective classes
 agent_mapping = {
-    "ReportWriter": ReportWriter
+    "ReportWriter": ReportWriter,
+    "SuggestionBox": SuggestionBox
     # Add other agents here as needed
 }
 
@@ -29,7 +31,7 @@ def report():
 def utility_outage():
     return render_template('outage.html')
 
-@application.route('/input_aggregation', methods=['GET'])
+@application.route('/feedback_analysis', methods=['GET'])
 def input_aggregation():
     return render_template('input_aggregation.html')
 

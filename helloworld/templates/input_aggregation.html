@@ -1,124 +1,252 @@
 {% extends 'base.html' %}
 
 {% block tool_name %}
-Police Report Assistant
+    City feedback aggregation and analysis
+{% endblock %}
+
+{% block subtitle %}
 {% endblock %}
 
 {% block description %}
-This tool provides a phase-based iterative approach to assist officers in writing reports, without missing critical details, or requiring multiple rounds of revisions.<br>
-It's currently department agnostic, but could be provided with context on local penal/civil codes, as well as department-specific policies and procedures.<br>
-<br>
-It's configured to approach the process in phases: Gaining user input, clarifying details, writing the report, evaluating the generated report, and revising if necessary.
-<br>
-<br>
-<b>To execute:<br></b>Press the "Send Pre-generated outline" button below. You'll then be asked to answer clarifying questions,
-    which you can answer however you'd like with the "Send custom message" button, until you're happy with the state of the report.<br><br>
-    If you'd prefer to draft the outline yourself, you can do so without using the pre-generated input. <br><br>
-This tool relies on OpenAI's chat completion API, so your input will shape the course of the report writing process, and query response times will vary based on their server performance.<br><br>
-Refreshing the page will clear current context.
+    This tool is designed to aggregate and analyze large volumes of chaotic user submitted feedback, with no pre-processing, and almost no cost overhead.
+    <br>
+    <br>
+    The comment collection system could come from email, web form input, facebook comments, etc. Any department or local government could
+    easily implement this as a low cost solution to hearing the voices of its employees, customers, or citizens in a way
+    that allows for quick prioritization and positive change. <br><br>
+    <b>To execute:<br></b>Press the "Send comments for review" button below. <br><br>
+    If you'd prefer a custom set of comments, you can clear the comments, and manually add whatever you'd like. <br><br>
+    This tool relies on OpenAI's chat completion API, so query response times will vary based on their server performance.<br><br>
+    Refreshing the page will clear current context.
 
 {% endblock %}
 
 {% block content %}
-                    <div id="chat-container">
-                        <div id="message-area">
-                            <div class="message">
-                                <div class="message-sender">user</div>
-                                <div class="message-body">I need to write a report. Are you ready to assist?</div>
-                            </div>
+    <div id="suggestion-box-area">
+        <div id="chat-container1">
+            <div id="message-area">
+                <div class="message">
+                    <div class="message-sender">user</div>
+                    <div class="message-body">Could you help me assess some feedback the city has received?</div>
+                </div>
 
-                            <div class="message">
-                                <div class="message-sender">assistant</div>
-                                <div class="message-body">Absolutely, I'm ready to assist you in drafting the report. Please provide the following essential details to begin:
+                <div class="message">
+                    <div class="message-sender">assistant</div>
+                    <div class="message-body">Absolutely. Press the "Send comments for review" button below.</div>
+                </div>
 
-    Your name and badge number.
-    The initial time and date of the incident.
-    The initial location of the incident.
+            </div>
+            <textarea type="text" id="message-input" placeholder="Type a message..."></textarea>
+            <button id="send-report">Submit comments for review</button>
+            <button id="send-button">Send custom message</button>
+        </div>
 
-Then, you can proceed to describe the timeline of events. I'm here to help you structure and clarify the details for the report.</div>
-                            </div>
-
-                        </div>
-                        <textarea type="text" id="message-input" placeholder="Type a message..."></textarea>
-                        <button id="send-report">Send Pre-generated outline</button>
-                        <button id="send-button">Send custom message</button>
-                    </div>
+        <div id="chat-container2">
+            <div id="comment-area">
+                <div class="comment">Maple's potholes are swallowing bikes whole! Can't we patch them up?</div>
+                <div class="comment">Maple Street's condition is unacceptable. When will the repairs begin?</div>
+                <div class="comment">We need a skate park for our kids. It's a healthy, active hobby!</div>
+                <div class="comment">Central Park was my go-to place for relaxation. Please fix the fountain soon.</div>
+                <div class="comment">Is it possible to add more bus routes covering the downtown area? Thanks!</div>
+                <div class="comment">bus stops with no seats??? come on now...</div>
+                <div class="comment">The fountain in Central Park used to be my favorite spot. Missing it!</div>
+                <div class="comment">Need more patrols on Birch Avenue. Speeding is getting out of hand.</div>
+                <div class="comment">The fountain's been dry for too long. Central Park doesn't feel the same anymore.
+                </div>
+                <div class="comment">City plan meeting needed. Let's talk about it folks.</div>
+                <div class="comment">The traffic's bad. roundabouts might help maybe?</div>
+                <div class="comment">The old theater could use some love. How about a renovation project?</div>
+                <div class="comment">Need shady spots for hot days in the park, plz.</div>
+                <div class="comment">A local history week would be great for community spirit. Let's plan it!</div>
+                <div class="comment">Old fountain was the charm of the park. Bring it back!</div>
+                <div class="comment">Maple St. potholes r a joke - they're huge!</div>
+                <div class="comment">Public transit is lacking on weekends. Can we get more frequent buses?</div>
+                <div class="comment">We should celebrate our town's history with an annual fair. Thoughts?</div>
+                <div class="comment">The recycling bins are always full by midweek. More frequent pickups, please!</div>
+                <div class="comment">Art classes in public spaces would be a hit. Let's get creative!</div>
+                <div class="comment">Need lights on the footpath by the river, gets spooky at night.</div>
+                <div class="comment">Maple st. really needs sum pothole work, like now!</div>
+                <div class="comment">Why not hold a fundraiser to fix the potholes on Maple? I'd chip in!</div>
+                <div class="comment">The broken fountain in Central Park is such an eyesore. When will it be fixed?
+                </div>
+                <div class="comment">Can someone address the stray cat situation near the library?</div>
+                <div class="comment">Sad about the Central Park fountain. It was such a peaceful spot.</div>
+                <div class="comment">community bake sale to raise funds, who's in?</div>
+                <div class="comment">need more recycle bins, its not rocket science</div>
+                <div class="comment">Stray dogs round 5th Ave. Someone gotta do smthn.</div>
+                <div class="comment">wall art downtown would be nice. brighten up the place!</div>
+                <div class="comment">Library hours too short. Some of us work late, y'know.</div>
+                <div class="comment">fountains broke? central park looks unloved :( pls fix</div>
+                <div class="comment">Art in the park, anyone? could be fun!</div>
+                <div class="comment">how bout a lil' garden for community in that empty lot?</div>
+                <div class="comment">Maple Street potholes have become a talking point. Time for action!</div>
+                <div class="comment">Fountain's dry again... let's get it flowing!</div>
+                <div class="comment">Old cinema's dying. How about a city project to fix?</div>
+                <div class="comment">Please consider more shaded areas in River Park. Summers are scorching!</div>
+                <div class="comment">How about a new playground in the east end? The kids need it.</div>
+                <div class="comment">When's the last time Maple Street saw a repair crew? These potholes are a safety
+                    hazard!
+                </div>
+                <div class="comment">Parks should have free Wi-Fi, don't you think? It'd be great for students!</div>
+                <div class="comment">Whats the holdup on Maple Street's repairs? It's bad.</div>
+                <div class="comment">Maple Street is like an obstacle course with all these new potholes!</div>
+                <div class="comment">These potholes are turning Maple into the moon's surface!</div>
+                <div class="comment">Could use some benches at bus stops on 3rd Street. Standing gets tiring.</div>
+                <div class="comment">The town needs a new recycling initiative. The current system isn't enough.</div>
+                <div class="comment">we shud have more buses on sundays. just sayin</div>
+                <div class="comment">The new zoning plan needs more input. Let's organize a town hall meet!</div>
+                <div class="comment">Those holes in the road on Maple are a total car wrecker!</div>
+                <div class="comment">Can we have more wheelchair-accessible paths in our parks?</div>
+                <div class="comment">side walks r cracked everywhere, wats up with that??</div>
+                <div class="comment">A community veggie garden would be a stellar addition to our town.</div>
+                <div class="comment">It's high time we repaired Maple Street. My car's suspension can't take it
+                    anymore!
+                </div>
+                <div class="comment">central park fountain = childhood. sad to see it broke.</div>
+                <div class="comment">Can the library extend its hours? Not everyone can make it by 5 PM.</div>
+                <div class="comment">Central Park fountain was a landmark. It's disheartening to see it off.</div>
+                <div class="comment">Let's paint some murals over these gray walls downtown. Time for color!</div>
+                <div class="comment">Maple Street's potholes are out of control. It's like driving on the moon!</div>
+                <div class="comment">We shuld carpool more. Who's organizing?</div>
+                <div class="comment">town history's cool. let's show it off more?</div>
+                <div class="comment">More streetlights on Willow Lane, please. It's too dark in the evenings.</div>
+                <div class="comment">Hey, wen will the water fountain get fixed at central park??</div>
+                <div class="comment">potholes or craters? Maple St's got em all!</div>
+                <div class="comment">bridge over the creek would be nice. safer walks!</div>
+                <div class="comment">Central Park's fountain used to be the highlight. Sad to see it neglected.</div>
+                <div class="comment">Let's start a carpool initiative to reduce traffic and pollution.</div>
+                <div class="comment">Can we get sum swings in the park? Kids wanna swing!</div>
+                <div class="comment">Can we organize a community clean-up for the public square?</div>
+                <div class="comment">A footbridge over the creek by Oak Street would make walks much safer.</div>
+                <div class="comment">Recycling matters! Let's increase the capacity of our downtown bins.</div>
+            </div>
+            <textarea type="text" id="comment-input" placeholder="Type a comment..."></textarea>
+            <button id="clear-comments">Clear comments</button>
+            <button id="add-comment">Add new comment</button>
+        </div>
+    </div>
 
     <script>
-    document.getElementById('send-report').addEventListener('click', function() {
-        reportText = "Sean Robinson (Badge number 7787), Montgomery Co Sheriff's office, Conroe, Texas\n\
-        \n\
-    1923hrs: arrived at the scene per dispatch, saying there was an altercation between two individuals\n\
-    Spoke with one man with a swollen eye, by the name of Chad Jensen. He reported being attacked by a woman he didn't know, when he refused to give her money for food\n\
-    Interviewed 3 other bystanders who corroborated story\m\
-    One bystander (Jason Bartlet) said he thinks he recognized the woman as Tiffany Fields (22) from maplewood apartments.\n\
-    1950hrs: drove 3 blocks to Maplewood apartments and asked front desk for address of Tiffany  (Appt 1234).\n\
-    On arriving at apartment, Tiffany's mother let me in and informed me that she'd just run in the door. There were abrasions on her knuckles.\n\
-    Tiffany resisted when asked to submit for arrest, so I was forced to taser her.\n\
-    2000hrs: Got Tiffany in the back of my squad car and took to jail"
+        document.getElementById('send-report').addEventListener('click', function () {
+            sendMessagesWithComments();
+        });
 
-        addMessageToDisplay('User', reportText);
-        sendMessages();
-    });
+        document.getElementById('clear-comments').addEventListener('click', function () {
+            clearComments();
+        });
 
-    document.getElementById('send-button').addEventListener('click', function() {
-        const inputField = document.getElementById('message-input');
-        const userMessage = inputField.value;
-        inputField.value = ''; // Clear the input field
+        document.getElementById('add-comment').addEventListener('click', function () {
+            const commentField = document.getElementById('comment-input');
+            const message = commentField.value;
+            addComment(message);
 
-        if (userMessage.trim() === '') {
-            return; // Don't send empty messages
+        });
+
+        document.getElementById('send-button').addEventListener('click', function () {
+            const inputField = document.getElementById('message-input');
+            const userMessage = inputField.value;
+            inputField.value = ''; // Clear the input field
+
+            if (userMessage.trim() === '') {
+                return; // Don't send empty messages
+            }
+
+            addMessageToDisplay('User', userMessage);
+            sendMessages();
+
+        });
+
+        function getMessages() {
+            const messages = Array.from(document.querySelectorAll('#message-area .message')).map(messageDiv => {
+                return {
+                    role: messageDiv.querySelector('.message-sender').textContent.trim().toLowerCase(),
+                    content: messageDiv.querySelector('.message-body').textContent.trim()
+                };
+            });
+            return messages
         }
 
-        addMessageToDisplay('User', userMessage);
-        sendMessages();
+        function sendMessages() {
+            // Prepare the messages from the message-area div for sending
+            const messages = getMessages();
+            console.log('messages:', messages);
 
-    });
+            // Send the messages to the server
+            callProcessMessages(messages)
 
-    function sendMessages(){
-                // Prepare the messages from the message-area div for sending
-        const messages = Array.from(document.querySelectorAll('#message-area .message')).map(messageDiv => {
-            return {
-             role : messageDiv.querySelector('.message-sender').textContent.trim().toLowerCase(),
-             content : messageDiv.querySelector('.message-body').textContent.trim()
-            };
-        });
-        console.log('messages:', messages);
+        }
 
-        // Add the current user message to the stack
-        // messages.push({ role: 'user', content: userMessage });
+       function callProcessMessages(messages){
+                        // Send the messages to the server
+            fetch('/process_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({agent: "SuggestionBox", messages: messages})
+            })
+                .then(response => response.text())
+                .then(responseMessage => {
+                    addMessageToDisplay('Assistant', responseMessage);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+       }
 
-        // Send the messages to the server
-        fetch('/process_message', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ agent: "ReportWriter", messages: messages })
-        })
-        .then(response => response.text())
-        .then(responseMessage => {
-            addMessageToDisplay('Assistant', responseMessage);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+       function extractComments() {
+            // Fetch the comment area
+            const commentArea = document.getElementById('comment-area');
+            // Get all comment divs
+            const comments = commentArea.getElementsByClassName('comment');
+            // Initialize the string with the header
+            let commentString = "Comment list:\n";
+            // Loop over the comments to add them to the string
+            for (let comment of comments) {
+                commentString += `"${comment.textContent.trim()}"\n`;
+            }
+            // Return the final string
+            return commentString;
+        }
 
-    }
 
-    function addMessageToDisplay(sender, message) {
-        const messageArea = document.getElementById('message-area');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'message';
-        messageDiv.setAttribute('data-role', sender.toLowerCase());
-        messageDiv.innerHTML = `
+        function sendMessagesWithComments(){
+            comments = extractComments()
+            addMessageToDisplay('User', "Thanks. I've just uploaded the comments list.");
+            systemMessage = {"role": "system","content": comments}
+            messages = getMessages()
+            messages.splice(messages.length - 1, 0, systemMessage);
+            callProcessMessages(messages)
+        }
+
+        function addMessageToDisplay(sender, message) {
+            const messageArea = document.getElementById('message-area');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.setAttribute('data-role', sender.toLowerCase());
+            messageDiv.innerHTML = `
             <div class="message-sender">${sender}</div>
             <div class="message-body">${message}</div>
         `;
-        messageArea.appendChild(messageDiv);
-        messageArea.scrollTop = messageArea.scrollHeight; // Scroll to the bottom
-    }
-</script>
+            messageArea.appendChild(messageDiv);
+            messageArea.scrollTop = messageArea.scrollHeight; // Scroll to the bottom
+        }
+
+        function addComment(message) {
+            const commentArea = document.getElementById('comment-area');
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment';
+            commentDiv.innerHTML = `${message}`;
+            commentArea.appendChild(commentDiv);
+            commentArea.scrollTop = commentArea.scrollHeight; // Scroll to the bottom
+        }
+
+        function clearComments(){
+            const commentArea = document.getElementById('comment-area');
+            commentArea.innerHTML = '';
+        }
+
+    </script>
 
 
 
