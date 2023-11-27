@@ -53,4 +53,5 @@ class ArtificialFriend:
     def insert_fake_user_message(self, message):
         self.__add_message(message, "user")
 
-
+    def insert_fake_system_message(self, message):
+        self.__add_message(message, "system")

@@ -1,16 +1,125 @@
 {% extends 'base.html' %}
 
+{% block tool_name %}
+Police Report Assistant
+{% endblock %}
+
 {% block description %}
-        This page contains a set of demos for the practical application of Generative AI in a government work environment. <br><br>
-        The goal of this exercise is to leverage the strengths of Generative AI to achieve positive real world results,
-        while minimalizing the investment into a complex and costly tech stack, where possible.
+This tool provides a phase-based iterative approach to assist officers in writing reports, without missing critical details, or requiring multiple rounds of revisions.<br>
+It's currently department agnostic, but could be provided with context on local penal/civil codes, as well as department-specific policies and procedures.<br>
+<br>
+It's configured to approach the process in phases: Gaining user input, clarifying details, writing the report, evaluating the generated report, and revising if necessary.
+<br>
+<br>
+<b>To execute:<br></b>Press the "Send Pre-generated outline" button below. You'll then be asked to answer clarifying questions,
+    which you can answer however you'd like with the "Send custom message" button, until you're happy with the state of the report.<br><br>
+    If you'd prefer to draft the outline yourself, you can do so without using the pre-generated input. <br><br>
+This tool relies on OpenAI's chat completion API, so your input will shape the course of the report writing process, and query response times will vary based on their server performance.<br><br>
+Refreshing the page will clear current context.
+
 {% endblock %}
 
 {% block content %}
-<!-- Page-specific content goes here -->
-<div class="page-content">
-    <h1>Welcome to Page Title!</h1>
-    <p>This is a sample content of a page.</p>
-    <!-- More content -->
-</div>
+                    <div id="chat-container">
+                        <div id="message-area">
+                            <div class="message">
+                                <div class="message-sender">user</div>
+                                <div class="message-body">I need to write a report. Are you ready to assist?</div>
+                            </div>
+
+                            <div class="message">
+                                <div class="message-sender">assistant</div>
+                                <div class="message-body">Absolutely, I'm ready to assist you in drafting the report. Please provide the following essential details to begin:
+
+    Your name and badge number.
+    The initial time and date of the incident.
+    The initial location of the incident.
+
+Then, you can proceed to describe the timeline of events. I'm here to help you structure and clarify the details for the report.</div>
+                            </div>
+
+                        </div>
+                        <textarea type="text" id="message-input" placeholder="Type a message..."></textarea>
+                        <button id="send-report">Send Pre-generated outline</button>
+                        <button id="send-button">Send custom message</button>
+                    </div>
+
+    <script>
+    document.getElementById('send-report').addEventListener('click', function() {
+        reportText = "Sean Robinson (Badge number 7787), Montgomery Co Sheriff's office, Conroe, Texas\n\
+        \n\
+    1923hrs: arrived at the scene per dispatch, saying there was an altercation between two individuals\n\
+    Spoke with one man with a swollen eye, by the name of Chad Jensen. He reported being attacked by a woman he didn't know, when he refused to give her money for food\n\
+    Interviewed 3 other bystanders who corroborated story\m\
+    One bystander (Jason Bartlet) said he thinks he recognized the woman as Tiffany Fields (22) from maplewood apartments.\n\
+    1950hrs: drove 3 blocks to Maplewood apartments and asked front desk for address of Tiffany  (Appt 1234).\n\
+    On arriving at apartment, Tiffany's mother let me in and informed me that she'd just run in the door. There were abrasions on her knuckles.\n\
+    Tiffany resisted when asked to submit for arrest, so I was forced to taser her.\n\
+    2000hrs: Got Tiffany in the back of my squad car and took to jail"
+
+        addMessageToDisplay('User', reportText);
+        sendMessages();
+    });
+
+    document.getElementById('send-button').addEventListener('click', function() {
+        const inputField = document.getElementById('message-input');
+        const userMessage = inputField.value;
+        inputField.value = ''; // Clear the input field
+
+        if (userMessage.trim() === '') {
+            return; // Don't send empty messages
+        }
+
+        addMessageToDisplay('User', userMessage);
+        sendMessages();
+
+    });
+
+    function sendMessages(){
+                // Prepare the messages from the message-area div for sending
+        const messages = Array.from(document.querySelectorAll('#message-area .message')).map(messageDiv => {
+            return {
+             role : messageDiv.querySelector('.message-sender').textContent.trim().toLowerCase(),
+             content : messageDiv.querySelector('.message-body').textContent.trim()
+            };
+        });
+        console.log('messages:', messages);
+
+        // Add the current user message to the stack
+        // messages.push({ role: 'user', content: userMessage });
+
+        // Send the messages to the server
+        fetch('/process_message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ agent: "ReportWriter", messages: messages })
+        })
+        .then(response => response.text())
+        .then(responseMessage => {
+            addMessageToDisplay('Assistant', responseMessage);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+    }
+
+    function addMessageToDisplay(sender, message) {
+        const messageArea = document.getElementById('message-area');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message';
+        messageDiv.setAttribute('data-role', sender.toLowerCase());
+        messageDiv.innerHTML = `
+            <div class="message-sender">${sender}</div>
+            <div class="message-body">${message}</div>
+        `;
+        messageArea.appendChild(messageDiv);
+        messageArea.scrollTop = messageArea.scrollHeight; // Scroll to the bottom
+    }
+</script>
+
+
+
 {% endblock %}

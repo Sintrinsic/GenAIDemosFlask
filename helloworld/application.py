@@ -1,9 +1,17 @@
 #!flask/bin/python
 import json
-from flask import Flask, Response, render_template
+from flask import Flask, Response, render_template, request, jsonify
 import optparse
 
+from helloworld.tools.agents.report_writer import ReportWriter
+
 application = Flask(__name__)
+
+# Mapping of agent identifiers to their respective classes
+agent_mapping = {
+    "ReportWriter": ReportWriter
+    # Add other agents here as needed
+}
 
 @application.route('/', methods=['GET'])
 def index():
@@ -25,7 +33,33 @@ def utility_outage():
 def input_aggregation():
     return render_template('input_aggregation.html')
 
+@application.route('/process_message', methods=['POST'])
+def process_message():
+    r_data = json.loads(request.data)
+    data = r_data
+    agent_id = data.get('agent')
+    messages = list(data.get('messages'))
 
+    # Instantiate the appropriate agent class
+    agent_class = agent_mapping.get(agent_id)
+    if not agent_class:
+        return jsonify({"error": "Invalid agent identifier"}), 400
+
+    agent = agent_class()
+
+    # Process all but the last message to create history
+    for message in messages[:-1]:
+        if message['role'] == 'user':
+            agent.insert_fake_user_message(message['content'])
+        if message['role'] == 'system':
+            agent.insert_fake_system_message(message['content'])
+        if message['role'] == 'assistant':
+            agent.insert_fake_agent_message(message['content'])
+            # Process the last message and get the response
+    last_message = messages[-1]
+    response = agent.send_message_solo(last_message['content'])
+
+    return response
 
 
 if __name__ == '__main__':

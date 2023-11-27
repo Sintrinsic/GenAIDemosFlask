@@ -167,7 +167,6 @@ class ChatHistory:
     def switch_fork(self, message_id, version_id):
         target_message = self.messages[message_id]
         target_message.switch_version(version_id)
-        self.root_message = target_message
 
 
     def to_json(self):

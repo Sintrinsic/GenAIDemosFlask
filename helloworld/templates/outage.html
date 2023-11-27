@@ -11,30 +11,36 @@
 {% endblock %}
 
 {% block content %}
-                    <div id="chat-container">
-                        <div id="message-area">
-                            <div class="message">
-                                <div class="message-sender">Sender's Name</div>
-                                <div class="message-body">Message body goes here...</div>
-                            </div>
-                            <div class="message">
-                                <div class="message-sender">Sender's Name</div>
-                                <div class="message-body">Message body goes here...</div>
-                            </div>
-                            <div class="message">
-                                <div class="message-sender">Sender's Name</div>
-                                <div class="message-body">Message body goes here...</div>
-                            </div>
-                            <div class="message">
-                                <div class="message-sender">Sender's Name</div>
-                                <div class="message-body">Message body goes here...</div>
-                            </div>
 
 
+   <form action="/process_message" method="post">
+    <input type="hidden" name="agent" value="ReportWriter">
+    <input type="text" name="messages" placeholder="Type a message...">
+    <button id="send-button">Send JSON</button>
+</form>
 
-                        </div>
-                        <input type="text" id="message-input" placeholder="Type a message...">
-                        <button id="send-button">Send</button>
-                    </div>
+<script>
+    document.getElementById('send-button').addEventListener('click', function() {
+        const data = {"agent":"ReportWriter","messages":[{"role":"user","content":"are you awake?"}]};
+
+        fetch('/process_message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Handle the response data here
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+
 
 {% endblock %}

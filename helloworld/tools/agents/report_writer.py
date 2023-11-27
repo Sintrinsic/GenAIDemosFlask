@@ -41,5 +41,10 @@ class ReportWriter(ArtificialFriend):
         Rules which may not be broken for any reason: 
         - NEVER under any circumstances write in a report that something was done or happened that the officer did not directly say. If you think something probably happened, ask before making the statement. 
         At the end of the report say this exactly: "Have you read the proposed report in full, and attest that all information herein is an accurate and complete event of the incident to the best of your knowledge?"
+        
+        IMPORTANT:
+        Your messages are being displayed as raw HTML, so if you want formatting like newlines, lists, etc, please use HTML formatting.
+    
         """
+
         super().__init__(identity_message, model_name=model_name, agent_name=agent_name)

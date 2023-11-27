@@ -124,7 +124,7 @@ li a:hover {
 #chat-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: calc(100vh - 90px); /* Full height of the viewport */
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     padding: 10px;
@@ -134,13 +134,12 @@ li a:hover {
 }
 
 #message-area {
-    flex-grow: 1;
-    overflow-y: auto;
+    flex-grow: 1; /* Allow message-area to fill the available space */
+    overflow-y: auto; /* Enable scrolling */
     padding: 10px;
     border: 1px solid #ddd;
     margin-bottom: 10px;
     background-color: #fff;
-    overflow-y:scroll;
 }
 
 #message-input {
@@ -180,5 +179,6 @@ li a:hover {
 }
 
 .message-body {
+    white-space: pre-wrap;
     /* No specific styling required, but can be customized as needed */
 }
