@@ -77,6 +77,8 @@ class OpenAIClient:
             )
             api_key = get_secret_value_response['SecretString']
         except (ClientError, NoCredentialsError) as e:
+            print(f"Error in fetching AWS secret: {e}")
+            print("Attempting to load secret key from local file.")
             with open("secret_key.txt") as f:
                 api_key = f.readline()
             print(f"AWS secrets not available. Using local secret key.")
