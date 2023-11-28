@@ -44,31 +44,34 @@ def input_aggregation():
 
 @application.route('/process_message', methods=['POST'])
 def process_message():
-    r_data = json.loads(request.data)
-    data = r_data
-    agent_id = data.get('agent')
-    messages = list(data.get('messages'))
+    try:
+        r_data = json.loads(request.data)
+        data = r_data
+        agent_id = data.get('agent')
+        messages = list(data.get('messages'))
 
-    # Instantiate the appropriate agent class
-    agent_class = agent_mapping.get(agent_id)
-    if not agent_class:
-        return jsonify({"error": "Invalid agent identifier"}), 400
+        # Instantiate the appropriate agent class
+        agent_class = agent_mapping.get(agent_id)
+        if not agent_class:
+            return jsonify({"error": "Invalid agent identifier"}), 400
 
-    agent = agent_class()
+        agent = agent_class()
 
-    # Process all but the last message to create history
-    for message in messages[:-1]:
-        if message['role'] == 'user':
-            agent.insert_fake_user_message(message['content'])
-        if message['role'] == 'system':
-            agent.insert_fake_system_message(message['content'])
-        if message['role'] == 'assistant':
-            agent.insert_fake_agent_message(message['content'])
-            # Process the last message and get the response
-    last_message = messages[-1]
-    response = agent.send_message_solo(last_message['content'])
+        # Process all but the last message to create history
+        for message in messages[:-1]:
+            if message['role'] == 'user':
+                agent.insert_fake_user_message(message['content'])
+            if message['role'] == 'system':
+                agent.insert_fake_system_message(message['content'])
+            if message['role'] == 'assistant':
+                agent.insert_fake_agent_message(message['content'])
+                # Process the last message and get the response
+        last_message = messages[-1]
+        response = agent.send_message_solo(last_message['content'])
 
-    return response
+        return response
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':
