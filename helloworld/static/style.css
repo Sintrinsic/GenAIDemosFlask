@@ -235,3 +235,7 @@ li a:hover {
     padding: 0;
 
 }
+
+.page-content {
+    max-width: 800px;
+}

@@ -62,14 +62,14 @@
         document.getElementById('send-report').addEventListener('click', function () {
             reportText = "Sean Robinson (Badge number 7787), Montgomery Co Sheriff's office, Conroe, Texas\n\
         \n\
-    1923hrs: arrived at the scene per dispatch, saying there was an altercation between two individuals\n\
-    Spoke with one man with a swollen eye, by the name of Chad Jensen. He reported being attacked by a woman he didn't know, when he refused to give her money for food\n\
-    Interviewed 3 other bystanders who corroborated story\m\
-    One bystander (Jason Bartlet) said he thinks he recognized the woman as Tiffany Fields (22) from maplewood apartments.\n\
-    1950hrs: drove 3 blocks to Maplewood apartments and asked front desk for address of Tiffany  (Appt 1234).\n\
-    On arriving at apartment, Tiffany's mother let me in and informed me that she'd just run in the door. There were abrasions on her knuckles.\n\
-    Tiffany resisted when asked to submit for arrest, so I was forced to taser her.\n\
-    2000hrs: Got Tiffany in the back of my squad car and took to jail"
+1923hrs: arrived at the scene per dispatch, saying there was an altercation between two individuals\n\
+Spoke with one man with a swollen eye, by the name of Chad Jensen. He reported being attacked by a woman he didn't know, when he refused to give her money for food\n\
+Interviewed 3 other bystanders who corroborated story\m\
+One bystander (Jason Bartlet) said he thinks he recognized the woman as Tiffany Fields (22) from maplewood apartments.\n\
+1950hrs: drove 3 blocks to Maplewood apartments and asked front desk for address of Tiffany  (Appt 1234).\n\
+On arriving at apartment, Tiffany's mother let me in and informed me that she'd just run in the door. There were abrasions on her knuckles.\n\
+Tiffany resisted when asked to submit for arrest, so I was forced to taser her.\n\
+2000hrs: Got Tiffany in the back of my squad car and took to jail"
 
             addMessageToDisplay('User', reportText);
             sendMessages();
@@ -121,7 +121,7 @@
                 .then(response => response.text())
                 .then(responseMessage => {
                     hideSpinner()
-                    html_message = marked.parse(responseMessage)
+                    html_message = responseMessage
                     addMessageToDisplay('Assistant', html_message);
                 })
                 .catch((error) => {
@@ -132,6 +132,8 @@
         }
 
         function addMessageToDisplay(sender, message) {
+            message = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
+            message = marked.parse(message)
             const messageArea = document.getElementById('message-area');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message';

@@ -204,7 +204,7 @@
                 .then(response => response.text())
                 .then(responseMessage => {
                     hideSpinner()
-                    html_message = marked.parse(responseMessage)
+                    html_message = responseMessage
                     addMessageToDisplay('Assistant', html_message);
                 })
                 .catch((error) => {
@@ -239,6 +239,7 @@
         }
 
         function addMessageToDisplay(sender, message) {
+            message = marked.parse(message)
             const messageArea = document.getElementById('message-area');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message';
